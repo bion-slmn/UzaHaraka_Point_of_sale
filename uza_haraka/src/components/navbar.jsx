@@ -10,13 +10,16 @@ import {
     NavbarLink,
     NavbarToggle,
   } from 'flowbite-react';
+  import { useNavigate, useParams } from 'react-router-dom';
   
   function NavBar() {
+    let navigate=useNavigate()
+    let { username } = useParams()
     return (
       <Navbar fluid rounded>
         <NavbarBrand href="/">
-          <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite React</span>
+          <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Logo" />
+          <span className="self-center whitespace-nowrap text-xl text-teal-400 font-semibold dark:text-whatsapp">UzaHaraka</span>
         </NavbarBrand>
         <div className="flex md:order-2">
           <Dropdown
@@ -27,14 +30,14 @@ import {
             }
           >
             <DropdownHeader>
-              <span className="block text-sm">Bonnie Green</span>
+              <span className="block text-sm">{username}</span>
               <span className="block truncate text-sm font-medium">name@flowbite.com</span>
             </DropdownHeader>
             <DropdownItem>Dashboard</DropdownItem>
             <DropdownItem>Settings</DropdownItem>
             <DropdownItem>Earnings</DropdownItem>
             <DropdownDivider />
-            <DropdownItem>Sign out</DropdownItem>
+            <DropdownItem onClick={()=>{navigate('/')}}>Sign out</DropdownItem>
           </Dropdown>
           <NavbarToggle />
         </div>

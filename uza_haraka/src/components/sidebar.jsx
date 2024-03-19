@@ -1,8 +1,10 @@
 
 import { Sidebar } from 'flowbite-react';
 import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 
 function SideBar() {
+    let navigate=useNavigate()
   return (
     <Sidebar aria-label="Default sidebar example">
       <Sidebar.Items>
@@ -22,7 +24,7 @@ function SideBar() {
           <Sidebar.Item href="#" icon={HiShoppingBag}>
             Products
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiTable}>
+          <Sidebar.Item onClick={()=>{navigate('/')}} icon={HiTable}>
             Log out
           </Sidebar.Item>
         </Sidebar.ItemGroup>
