@@ -9,19 +9,36 @@ import {
     NavbarBrand,
     NavbarCollapse,
     NavbarLink,
-    NavbarToggle,
+    DarkThemeToggle,
     
   } from 'flowbite-react';
   import { FormControl, Flex } from '@chakra-ui/react';
   import { useNavigate, useParams } from 'react-router-dom';
+  import { useSidebarContext } from "@/context/SidebarContext";
+  import { isSmallScreen } from "@/helpers/is-small-screen";
+  import { HiMenuAlt1, HiX } from "react-icons/hi";
   
   function NavBar() {
+    const { isCollapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
+    useSidebarContext();
     let navigate=useNavigate()
     let { username } = useParams()
     return (
       <Navbar fluid rounded color="blue" className="bg-teal-400 shadow-l" >
         <div className="container flex flex-row justify-space-between items-center">
           <Flex>
+            <button
+                aria-controls="sidebar"
+                aria-expanded
+                className="mr-2 cursor-pointer rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:bg-gray-700 dark:focus:ring-gray-700"
+                onClick={() => setSidebarCollapsed(!isSidebarCollapsed)}
+              >
+                {isSidebarCollapsed || !isSmallScreen() ? (
+                  <HiMenuAlt1 className="h-6 w-6" />
+                ) : (
+                  <HiX className="h-6 w-6" />
+                )}
+              </button>
             <NavbarBrand href="/">
               <span className="self-center whitespace-nowrap ml-4 text-xl text-teal-400 font-semibold dark:text-teal-400">UzaHaraka</span>
             </NavbarBrand>
@@ -48,13 +65,8 @@ import {
                 </Dropdown>
           </Flex>
         </div>
-        <div className="flex items-center gap-2 md:order-2">
-          <Button>All Products</Button>
-          <Button>Kitchenware</Button>
-          <Button>Beverages</Button>
-          <Button>Foodstuffs</Button>
-          <Button>Toiletries</Button>
-        </div>
+        <DarkThemeToggle />
+        
        
       </Navbar>
     );
