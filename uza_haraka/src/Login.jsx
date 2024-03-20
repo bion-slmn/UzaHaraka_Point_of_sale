@@ -21,8 +21,8 @@ const LogInForm = () => {
 		text-white relative flex 
 		flex-row justify-center 
 		items-center h-screen w-full"> 
-			<Box className="col-span-3 w- h-auto 
-							shadow-gray-400 border 
+			<Box className="col-span-4 w- h-auto 
+							shadow-gray-400 border-2 border-gray-400
 							shadow-xl 
 							rounded-xl lg:p-4"> 
 				<Box className="p-4"> 

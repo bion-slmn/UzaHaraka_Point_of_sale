@@ -9,17 +9,15 @@ import ProductsView from "./components/products";
 
 function App() { 
 return ( 
-	<BrowserRouter>
-      <Link to='/dashboard'>Dashboard</Link>
-      <Link to='/products'>Products</Link>
-      <Link to='/checkout'>Checkout</Link>
-      <Routes>
-            <Route path="/" element={<LogInForm />} />
-            <Route path="/dashboard/:username" element={<Dashboard />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/products" element={<ProductsView />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
+      <BrowserRouter>
+            
+            <Routes>
+                  <Route path="/" element={<LogInForm />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/checkout" element={<CheckOut />} />
+                  <Route path="/products" element={<ProductsView />} />
+                  <Route path="*" element={<NoPage />} />
+            </Routes>
       </BrowserRouter>
 	); 
 } 
