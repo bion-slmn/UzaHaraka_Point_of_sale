@@ -1,82 +1,105 @@
-//FormExample.jsx 
-import { 
-	Box, 
-	Button, 
-	Flex, 
-	FormControl, 
-	FormLabel, 
-	Input, 
-	Text, 
-	useToast, 
-} from "@chakra-ui/react"; 
-import React from "react"; 
-import { useState } from "react"; 
+  import {
+	Box,
+	Button,
+	Card,
+	CardBody,
+	Center,
+	FormControl,
+	FormLabel,
+	Heading,
+	HStack,
+	Input,
+	Link,
+	Stack,
+	Text,
+	VStack,
+} from '@chakra-ui/react';
 
-const LogInForm = () => { 
-	const [email, setEmail] = useState(""); 
-	const [password, setPassword] = useState(""); 
-	
-	return ( 
-		<div className="bg-primary shadow-xl 
-		text-white relative flex 
-		flex-row justify-center 
-		items-center h-screen w-full"> 
-			<Box className="col-span-4 w- h-auto 
-							shadow-gray-400 border-2 border-gray-400
-							shadow-xl 
-							rounded-xl lg:p-4"> 
-				<Box className="p-4"> 
-					<Text className="text-center text-3xl 
-									text-bold 
-									text-blue-700"> 
-						Welcome to UzaHaraka POS 
-					</Text> 
+function LogInForm() {
+	return (
+		<>
+		<Center>
+			<Card bg="facebook"  spacing="6" mt="8" variant="outline" shadow={'lg'} w="450px">
+				<CardBody>
+					<Stack spacing="4">
+						<VStack as="header" spacing="6" mt="8">
+							<Heading
+								as="h1"
+								fontSize="30px"
+								letterSpacing="-0.5px"
+								color="#2da44e"
+								fontWeight="bold"
+							>
+								Welcome to UzaHaraka
+							</Heading>
+						</VStack>
+						<Stack />
+						<form>
+							<Stack spacing="4">
+								<FormControl>
+									<FormLabel size="sm">Username</FormLabel>
+									<Input
+										type="text"
+										bg="white"
+										borderColor="#d8dee4"
+										size="sm"
+										borderRadius="6px" />
+								</FormControl>
+								<FormControl>
+									<HStack justify="space-between">
+										<FormLabel size="sm">Password</FormLabel>
+										<Button
+											as="a"
+											href="#"
+											variant="link"
+											size="xs"
+											color="#0969da"
+											fontWeight="500"
+										>
+											Forgot password?
+										</Button>
+									</HStack>
+									<Input
+										type="password"
+										bg="white"
+										borderColor="#d8dee4"
+										size="sm"
+										borderRadius="6px" />
+								</FormControl>
 
-					<Box className="grid md:grid-cols-2 
-									gap-4 w-full py-6"> 
-						<Flex className="flex-col py-2"> 
-							<FormControl> 
-								<FormLabel textColor={'black'}> 
-									Email address 
-								</FormLabel> 
-								<Input 
-									type="email"
-									onChange={(e) => { 
-										setEmail(e.target.value); 
-									}} 
-								/> 
-							</FormControl> 
-						</Flex> 
-						<Flex flexDirection={"column"} 
-							className="py-2"> 
-							<FormControl> 
-								<FormLabel textColor={'black'}> 
-									Password 
-								</FormLabel> 
-								<Input 
-									type="password"
-									onChange={(e) => { 
-										setPassword(e.target.value); 
-									}} 
-								/> 
-							</FormControl> 
-						</Flex> 
-					</Box> 
-					
-					<Button 
-						loadingText="Submitting"
-						color="white"
-						bg="darkred"
-						variant="solid"
-						className="p-2 w-full"
-						as={'a'} href="/dashboard"
-					> 
-						Submit 
-					</Button> 
-				</Box> 
-			</Box> 
-		</div>							
-	); 
-}; 
+								<Button
+									bg="#2da44e"
+									color="white"
+									size="sm"
+									_hover={{ bg: '#2c974b' }}
+									_active={{ bg: '#298e46' }}
+									as={'a'} href='/dashboard'
+								>
+									Sign in
+								</Button>
+							</Stack>
+						</form>
+					</Stack>
+				</CardBody>
+			</Card>
+		</Center><Center as="footer" mt="16">
+				<HStack spacing="4" pt="2">
+					<Link isExternal color="#0969da" href="#" fontSize="xs">
+						Terms
+					</Link>
+					<Link isExternal color="#0969da" href="#" fontSize="xs">
+						Privacy
+					</Link>
+					<Link isExternal color="#0969da" href="#" fontSize="xs">
+						Security
+					</Link>
+					<Link isExternal href="#" fontSize="s">
+						 UzaHaraka
+					</Link>
+				</HStack>
+			</Center>
+		</>
+	);
+}
 
 export default LogInForm;

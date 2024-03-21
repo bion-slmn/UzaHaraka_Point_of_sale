@@ -6,11 +6,12 @@ function NavBar() {
       <Navbar.Brand href="https://flowbite-react.com">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">UzaHaraka</span>
       </Navbar.Brand>
-      <input type="text" className="rounded-8" placeholder='Search Products' />
+      <input type="text" className="rounded" placeholder='Search Products' />
       <div className="flex md:order-2">
         <Dropdown
           arrowIcon={false}
           inline
+          bgColor={''}
           label={
             <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
           }
@@ -20,7 +21,7 @@ function NavBar() {
           <Dropdown.Item>Settings</Dropdown.Item>
           <Dropdown.Item>Earnings</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item as={'a'} href='/'>Sign out</Dropdown.Item>
         </Dropdown>
         <Navbar.Toggle />
       </div>

@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 function SideBar() {
     let navigate=useNavigate()
   return (
-    <Sidebar className='bg-teal-400 w-64 h-screen' variant="dark">
+    <Sidebar className='bg-teal-400 w-64 h-full' variant="dark">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
+          <Sidebar.Item href="/dashboard" icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiViewBoards}>

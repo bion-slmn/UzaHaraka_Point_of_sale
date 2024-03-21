@@ -9,7 +9,7 @@ export default function Dashboard() {
   return (
     <>
       <NavBar />
-      <div className='flex flex-row gap-8 align-center w-full h-full'>
+      <div className='flex flex-row justify-between w-full'>
         <SideBar />
         <div className="flex gap-4 md:order-2">
             <Button className='ml-8'>All Products</Button>
@@ -18,7 +18,7 @@ export default function Dashboard() {
             <Button>Foodstuffs</Button>
             <Button>Toiletries</Button>
           </div>
-          <div className="flex flex-col h-full flex-end gap-4 md:order-1 border-2 border-gray-400 rounded-xl p-4">
+          <div className="flex flex-col h-full flex-end gap-4 mr-8 md:order-1 shadow-md rounded-xl p-4">
              <Heading>ORDER LIST</Heading>
              <Text>Item1</Text>
              <Text>Item2</Text>

@@ -1,5 +1,4 @@
 // App.jsx 
-import "./App.css"; 
 import LogInForm from "./Login";
 import Dashboard from './components/dashboard';
 import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
