@@ -1,12 +1,13 @@
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Input } from '@chakra-ui/react';
+import { Avatar, DarkThemeToggle, Dropdown, Navbar } from 'flowbite-react';
 
 function NavBar() {
   return (
-    <Navbar fluid rounded className='bg-teal-400 shadow-lg mb-4 w-full'>
-      <Navbar.Brand href="https://flowbite-react.com">
+    <Navbar fluid rounded className='bg-white shadow-lg mb-4 w-full h-20 p-4' >
+      <Navbar.Brand href="#">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">UzaHaraka</span>
       </Navbar.Brand>
-      <input type="text" className="rounded" placeholder='Search Products' />
+      <Input type="text" width={80} placeholder='Search Products' />
       <div className="flex md:order-2">
         <Dropdown
           arrowIcon={false}
@@ -23,7 +24,7 @@ function NavBar() {
           <Dropdown.Divider />
           <Dropdown.Item as={'a'} href='/'>Sign out</Dropdown.Item>
         </Dropdown>
-        <Navbar.Toggle />
+        <DarkThemeToggle />
       </div>
       
     </Navbar>
