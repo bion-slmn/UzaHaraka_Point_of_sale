@@ -19,7 +19,7 @@ return (
                   <Route path="*" element={<NoPage />} />
             </Routes>
       </BrowserRouter>
-	); 
+	)
 } 
 
 export default App;

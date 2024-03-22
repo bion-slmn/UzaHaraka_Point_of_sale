@@ -1,9 +1,11 @@
+import { Spacer } from '@chakra-ui/react';
 import { Footer, FooterCopyright, FooterLink, FooterLinkGroup } from 'flowbite-react';
 
 function FooterView() {
   return (
-    <Footer  container className='top-auto bottom-0 w-full bg-teal-400'>
+    <Footer  container className='flex fixed bottom-0 border-t w-full shadow-xl p-4'>
       <FooterCopyright href="#" by="UzaHaraka™" year={2024} />
+      <Spacer />
       <FooterLinkGroup>
         <FooterLink href="#">About</FooterLink>
         <FooterLink href="#">Privacy Policy</FooterLink>
@@ -11,7 +13,7 @@ function FooterView() {
         <FooterLink href="#">Contact</FooterLink>
       </FooterLinkGroup>
     </Footer>
-  );
+  )
 }
 
 export default FooterView;

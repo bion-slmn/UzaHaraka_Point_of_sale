@@ -3,9 +3,9 @@ import { Avatar, DarkThemeToggle, Dropdown, Navbar } from 'flowbite-react';
 
 function NavBar() {
   return (
-    <Navbar fluid rounded className='bg-white shadow-lg mb-4 w-full h-20 p-4' >
+    <Navbar fluid rounded className='bg-teal shadow-lg mb-4 w-full h-18 p-4' >
       <Navbar.Brand href="#">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">UzaHaraka</span>
+        <span className="self-center whitespace-nowrap text-xl text-teal font-semibold dark:text-teal">UzaHaraka</span>
       </Navbar.Brand>
       <Input type="text" width={80} placeholder='Search Products' />
       <div className="flex md:order-2">
