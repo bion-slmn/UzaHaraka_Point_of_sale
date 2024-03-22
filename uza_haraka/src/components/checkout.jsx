@@ -9,7 +9,7 @@ export default function CheckOut() {
     return ( 
       <>
         <NavBar />
-        <div className='flex flex-row justify-between w-full'>
+        <div className='flex flex-row justify-between gap-2 w-full'>
           <SideBar />
           <div className="flex flex-col flex-end h-full w-full gap-4 md:order-1">
           {/* <div className="flex flex-col flex-end w-300 md:order-2"> */}

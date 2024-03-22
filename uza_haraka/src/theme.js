@@ -1,6 +1,6 @@
-import { type CustomFlowbiteTheme } from "flowbite-react";
+import { CustomFlowbiteTheme } from "flowbite-react";
 
-export const flowbiteTheme: CustomFlowbiteTheme = {
+export const CustomFlowbiteTheme = {
   footer: {
     root: {
       base: "flex flex-col",
@@ -25,9 +25,9 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   },
   sidebar: {
     root: {
-      base: "h-full bg-gray-50",
+      base: "h-full bg-teal-500",
       inner:
-        "h-full overflow-y-auto overflow-x-hidden bg-white py-4 px-3 dark:bg-gray-800",
+        "h-full overflow-y-auto overflow-x-hidden bg-white py-4 px-3 dark:bg-teal-800",
     },
     collapse: {
       list: "space-y-2 py-2 list-none",
@@ -39,4 +39,4 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       base: "list-none border-t border-gray-200 pt-3 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700",
     },
   },
-};
+}

@@ -3,7 +3,7 @@ import { Footer, FooterCopyright, FooterLink, FooterLinkGroup } from 'flowbite-r
 
 function FooterView() {
   return (
-    <Footer  container className='flex fixed bottom-0 border-t w-full shadow-xl p-4'>
+    <Footer  container className='flex fixed bottom-0 border-t w-full shadow-lg p-4'>
       <FooterCopyright href="#" by="UzaHaraka™" year={2024} />
       <Spacer />
       <FooterLinkGroup>
