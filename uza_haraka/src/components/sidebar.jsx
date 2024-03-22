@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function SideBar() {
     let navigate=useNavigate()
   return (
-    <Sidebar className='flex flex-col justify-start w-90 h-200 p-4'>
+    <Sidebar className='flex flex-col-span-2 border bg-teal-50 w-90 h-screen p-4'>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="/dashboard" icon={HiChartPie}>

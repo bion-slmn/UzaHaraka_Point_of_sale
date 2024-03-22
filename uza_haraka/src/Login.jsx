@@ -14,8 +14,16 @@
 	Text,
 	VStack,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 function LogInForm() {
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('')
+
+	const submitLogin = () => {
+		// validate
+		alert(username);
+	}
 	return (
 		<>
 		<Center>
@@ -43,7 +51,11 @@ function LogInForm() {
 										bg="white"
 										borderColor="#d8dee4"
 										size="sm"
-										borderRadius="6px" />
+										borderRadius="6px"
+										value={username} 
+										onChange={(e) => {
+											setUsername(e.target.value)
+										}}/>
 								</FormControl>
 								<FormControl>
 									<HStack justify="space-between">
@@ -55,6 +67,8 @@ function LogInForm() {
 											size="xs"
 											color="#0969da"
 											fontWeight="500"
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
 										>
 											Forgot password?
 										</Button>
@@ -73,6 +87,7 @@ function LogInForm() {
 									size="sm"
 									_hover={{ bg: '#2c974b' }}
 									_active={{ bg: '#298e46' }}
+									onClick={submitLogin}
 									as={'a'} href='/dashboard'
 								>
 									Sign in

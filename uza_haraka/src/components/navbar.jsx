@@ -1,22 +1,39 @@
-import { Input } from '@chakra-ui/react';
+import { Input, Button } from '@chakra-ui/react';
 import { Avatar, DarkThemeToggle, Dropdown, Navbar } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+
 
 function NavBar() {
+  const [user, setUser] = useState({
+    name: '',
+    avatar: ''
+  })
+  useEffect(() => {
+    const ourUser = {
+      name: 'Peter',
+      avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
+    }
+
+    setUser(ourUser);
+  }, [])
   return (
-    <Navbar fluid rounded className='bg-teal shadow-lg mb-4 w-full h-18 p-4' >
+    <Navbar fluid rounded className='bg-teal-50 shadow-lg mb-4 w-full h-18 p-4' >
       <Navbar.Brand href="#">
         <span className="self-center whitespace-nowrap text-green-500 text-xl text-teal font-extrabold dark:text-green-500">UzaHaraka</span>
       </Navbar.Brand>
-      <Input type="text" width={80} placeholder='Search Products' />
+      <div className='flex flex-row'>
+        <Input type="text" width={80} placeholder='Search Products'   />
+        <Button bgColor='teal' textColor={'white'}>Search</Button>
+      </div>
       <div className="flex md:order-2">
         <Dropdown
           arrowIcon={false}
           inline
           label={
-            <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" className='rounded-full' />
+            <Avatar alt="User settings" img={user.avatar} className='rounded-full' />
           }
         >
-          
+          <Dropdown.Item>{user.name}</Dropdown.Item>
           <Dropdown.Item>Dashboard</Dropdown.Item>
           <Dropdown.Item>Settings</Dropdown.Item>
           <Dropdown.Item>Earnings</Dropdown.Item>
