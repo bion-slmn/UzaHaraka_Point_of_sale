@@ -69,8 +69,8 @@ export default function CheckOut() {
             <Text>Item1</Text>
             <Text>Item2</Text>
             <Text>Item3</Text>
-            <Text>Subtotal</Text>
-            <Button as={'a'} href='/checkout' bgColor={'blue'} textColor={'white'}>Checkout</Button>
+            <Text fontWeight={'bold'}>Total</Text>
+            <Button as={'a'} href='/checkout' bgColor={'blue'} textColor={'white'}>Confirm Checkout</Button>
           </div>
         
       </div>
