@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	Card,
 	CardBody,
@@ -11,7 +10,6 @@ import {
 	Input,
 	Link,
 	Stack,
-	Text,
 	VStack,
 } from '@chakra-ui/react';
 import { useRef, useState, useEffect } from 'react'
@@ -21,7 +19,7 @@ import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
 
-const LogInForm = () => {
+function LogInForm() {
 	const userRef = useRef()
 	const errRef = useRef()
 	const [user, setUser] = useState('')
@@ -29,7 +27,7 @@ const LogInForm = () => {
 	const [errMsg, setErrMsg] = useState('')
 	const navigate = useNavigate()
 
-	const [login, { isLoading }] = useLoginMutation()
+	 const [login, { isLoading }] = useLoginMutation()
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -68,7 +66,8 @@ const LogInForm = () => {
 
 	const handlePwdInput = (e) => setPwd(e.target.value)
 
-	const content = isLoading ? <h1>Loading...</h1> : (
+
+	return (
 		<VStack as="form" spacing="4" onSubmit={handleSubmit}>
 			<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
@@ -160,10 +159,7 @@ const LogInForm = () => {
 				</HStack>
 			</Center>
 		</VStack>
-	)
-
-	return content
-
+	);
 }
 
 export default LogInForm;
