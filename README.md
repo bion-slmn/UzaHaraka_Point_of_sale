@@ -2,7 +2,13 @@
 UzaHaraka is a single business Point of sale web app. Its build with django in the backend and react in the frontend.
 The backend uses sessionbased authenication and authorizaation for the user.
 
-To user the app move to point-of-sale folder using this command in linux
+To use the app move to point-of-sale folder using this command in linux
+###Install the reuired libraries
+```
+pip install -r requirements.txt
+```
+Move point of sale folder
+
 ``` cd UzaHaraka_Point_of_sale/point_of_sale ```
 
 Create the tables in database using
