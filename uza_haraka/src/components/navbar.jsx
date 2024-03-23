@@ -30,7 +30,7 @@ function NavBar() {
           arrowIcon={false}
           inline
           label={
-            <Avatar alt="User settings" img={user.avatar} className='rounded-full' />
+            <Avatar alt="User settings" img={user.avatar} className='w-10 h-10 rounded-full' />
           }
         >
           <Dropdown.Item>{user.name}</Dropdown.Item>
