@@ -6,14 +6,20 @@ To user the app move to point-of-sale folder using this command in linux
 ``` cd UzaHaraka_Point_of_sale/point_of_sale ```
 
 Create the tables in database using
-```python3 manage.py makemigrations
-python3 manage.py migrate```
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
 The Admin is created from the commandline using
-```python3 manage.py createsuperuser```
+```
+python3 manage.py createsuperuser
+```
 
 The admin then runs starts the app using
-```python3 manage.py runserver```
+```
+python3 manage.py runserver
+```
 
 And visits the admin page and create account the for the employees user users
 > http://127.0.0.1:8000/admin/ 
