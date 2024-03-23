@@ -30,8 +30,16 @@ The backend communicated with the front end using API.
 ### To login a user that was created by admin
 The user can use the user name or email addreess to login
 ### /user/login/ 
-POST: Return a json of the username and profile picture of the user if set
-```{"username":"bon","profilePic":"/media/profile_pics/hp.jfif"}```
+POST: in the body of request username and password is passed
+Return a json of the username and profile picture of the user if set. 
+Check out the example below where curl is used
+```
+REQUEST:
+curl -X POST localhost:8000/user/login/ -H "Content-Type: application/json" -d '{"username": "bon", "password": "firefox123"}'
+
+RETURN:
+{"username":"bon","profilePic":"/media/profile_pics/hp.jfif"}
+```
 
 This creates a session for the user and sets two cookies in the  browser
 The sessionid and crsftoken
@@ -50,3 +58,10 @@ Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3PoELUVC; sessionid=gc8knitxkpzuuxkfcv
 ### /user/logout/
 POST: deletes the session from the backend and logout the user 
 . If the user must be logged in before he logout
+```
+REQUEST:
+curl -X POST localhost:8000/user/logout/ \
+-H "Content-Type: application/json" \
+-H "Cookie: csrftoken=<csrf_token>; sessionid=<sessionid>" \
+-H "X-CSRFToken: <csrf_token>"
+```
