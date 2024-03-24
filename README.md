@@ -3,7 +3,7 @@ UzaHaraka is a single business Point of sale web app. Its build with django in t
 The backend uses sessionbased authenication and authorizaation for the user.
 
 To use the app move to point-of-sale folder using this command in linux
-### Install the reuired libraries
+### Install the required libraries
 ```
 pip install -r requirements.txt
 ```
@@ -82,7 +82,12 @@ NOTE: This doesnt list the products associated with each category as this would 
  curl -X GET localhost:8000/product/view-category/ -H "Content-Type: applview-category/  X-CSRFToken: 2XORN895V8mX8oUPuZDB1Qhz3PoELUVC" -H "Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3PoELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" 
 
  RETURNS:
- [{"id":"9541f1b3-f240-4c49-84a4-2fffb7d8a906","created_at":"2024-03-20T22:23:50.148029+03:00","updated_at":"2024-03-20T22:23:50.148075+03:00","name":"Bearing","description":"dome","category_image":null},{"id":"96775063-0b49-494f-b187-e3e332f41728","created_at":"2024-03-20T22:24:02.905464+03:00","updated_at":"2024-03-23T17:28:58.553874+03:00","name":"phone","description":"all phones","category_image":"/media/images/androidphones-2048px-4861.jpg"},{"id":"3b192771-0ed0-4c9a-a4ac-99fb810f1215","created_at":"2024-03-23T17:25:49.384346+03:00","updated_at":"2024-03-23T17:25:49.384382+03:00","name":"Laptops","description":"All laptops in our stores","category_image":"/media/images/hp_wOozmGH.jfif"},{"id":"09e0c3d2-3403-421b-92f6-68ad5a47c64b","created_at":"2024-03-23T17:28:49.098576+03:00","updated_at":"2024-03-23T17:28:49.098622+03:00","name":"TVs","description":"All television in our store","category_image":"/media/images/TV.jfif"}]
+ [
+{"id":"9541f1b3-f240-4c49-84a4-2fffb7d8a906","created_at":"2024-03-20T22:23:50.148029+03:00","updated_at":"2024-03-20T22:23:50.148075+03:00","name":"Bearing","description":"dome","category_image":null},
+{"id":"96775063-0b49-494f-b187-e3e332f41728","created_at":"2024-03-20T22:24:02.905464+03:00","updated_at":"2024-03-23T17:28:58.553874+03:00","name":"phone","description":"all phones","category_image":"/media/images/androidphones-2048px-4861.jpg"},
+{"id":"3b192771-0ed0-4c9a-a4ac-99fb810f1215","created_at":"2024-03-23T17:25:49.384346+03:00","updated_at":"2024-03-23T17:25:49.384382+03:00","name":"Laptops","description":"All laptops in our stores","category_image":"/media/images/hp_wOozmGH.jfif"},
+{"id":"09e0c3d2-3403-421b-92f6-68ad5a47c64b","created_at":"2024-03-23T17:28:49.098576+03:00","updated_at":"2024-03-23T17:28:49.098622+03:00","name":"TVs","description":"All television in our store","category_image":"/media/images/TV.jfif"}
+]
 ```
 
 ## To view a specific category and the associted product.
@@ -146,7 +151,10 @@ curl -X GET localhost:8000/product/view-sales/ -H "X-CSRFToken: 2XORN895V8mX8oUP
 ELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" 
 
 RETURNS:
-[{"id":"51789d15-bc68-4121-b958-4c902c913432","created_at":"2024-03-21T13:16:14.429737+03:00","updated_at":"2024-03-21T13:16:14.429803+03:00","quantity":12,"selling_price":15000.0,"total":180000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3},{"id":"0f2941ae-47d8-4de2-93ee-aeb540b01781","created_at":"2024-03-22T09:10:31.849246+03:00","updated_at":"2024-03-22T09:10:31.849393+03:00","quantity":5,"selling_price":15000.0,"total":75000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3}]
+[
+{"id":"51789d15-bc68-4121-b958-4c902c913432","created_at":"2024-03-21T13:16:14.429737+03:00","updated_at":"2024-03-21T13:16:14.429803+03:00","quantity":12,"selling_price":15000.0,"total":180000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3},
+{"id":"0f2941ae-47d8-4de2-93ee-aeb540b01781","created_at":"2024-03-22T09:10:31.849246+03:00","updated_at":"2024-03-22T09:10:31.849393+03:00","quantity":5,"selling_price":15000.0,"total":75000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3}
+]
 ``` 
 
 ## To make a sale of the product
