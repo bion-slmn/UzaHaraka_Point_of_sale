@@ -12,65 +12,59 @@ import {
 	Stack,
 	VStack,
 } from '@chakra-ui/react';
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import CheckButton from "react-validation/build/button";
 
-import { useDispatch } from 'react-redux'
-import { setCredentials } from './authSlice'
-import { useLoginMutation } from './authApiSlice'
-
-function LogInForm() {
-	const userRef = useRef()
-	const errRef = useRef()
-	const [user, setUser] = useState('')
-	const [pwd, setPwd] = useState('')
-	const [errMsg, setErrMsg] = useState('')
+const LogInForm = () => {
+	const form = useRef()
+	const checkBtn = useRef()
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
 
-	 const [login, { isLoading }] = useLoginMutation()
+	const { isLoggedIn } = useSelector((state) => state.auth)
+	const { message } = useSelector((state) => state.message)
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		userRef.current.focus()
-	}, [])
+	const onChangeUsername = (e) => {
+		const username = e.target.value;
+		setUsername(username);
+	};
 
-	useEffect(() => {
-		setErrMsg('')
-	}, [user, pwd])
+	const onChangePassword = (e) => {
+		const password = e.target.value;
+		setPassword(password);
+	};
 
-	const handleSubmit = async (e) => {
+	const handleLogin = (e) => {
 		e.preventDefault()
 
-		try {
-			const userData = await login({ user, pwd }).unwrap()
-			dispatch(setCredentials({ ...userData, user }))
-			setUser('')
-			setPwd('')
-			navigate('/welcome')
-		} catch (err) {
-			if (!err?.originalStatus) {
-				// isLoading: true until timeout occurs
-				setErrMsg('No Server Response');
-			} else if (err.originalStatus === 400) {
-				setErrMsg('Missing Username or Password');
-			} else if (err.originalStatus === 401) {
-				setErrMsg('Unauthorized');
-			} else {
-				setErrMsg('Login Failed');
-			}
-			errRef.current.focus();
+		setLoading(true);
+
+		form.current.validateAll();
+		if (checkBtn.current.context._errors.length === 0) {
+			dispatch(login(username, password))
+				.then(() => {
+					navigate("/dashboard");
+					window.location.reload();
+				})
+				.catch(() => {
+					setLoading(false);
+				});
+		} else {
+			setLoading(false);
 		}
+	};
+	if (isLoggedIn) {
+		return <Navigate to="/dashboard" />;
 	}
-
-	const handleUserInput = (e) => setUser(e.target.value)
-
-	const handlePwdInput = (e) => setPwd(e.target.value)
 
 
 	return (
-		<VStack as="form" spacing="4" onSubmit={handleSubmit}>
-			<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-
+		<VStack as="form" spacing="4" onSubmit={handleLogin} ref={form}>
 			<Center>
 				<Card bg="facebook" spacing="6" mt="8" variant="outline" shadow={'lg'} w="450px">
 					<CardBody>
@@ -98,31 +92,25 @@ function LogInForm() {
 											ref={useRef}
 											size="sm"
 											borderRadius="6px"
-											value={user}
+											value={username}
 											autoComplete='off'
 											required
-											onChange={handleUserInput}
+											onChange={onChangeUsername}
 										/>
-										
+
 									</FormControl>
 									<FormControl>
 										<HStack justify="space-between">
 											<FormLabel size="sm">Password</FormLabel>
 											<Input
 												type="password"
-												value={pwd}
-												onChange={handlePwdInput}
+												name='password'
+												value={password}
+												onChange={onChangePassword}
 												required
 											/>
 
 										</HStack>
-										<Input
-											type="password"
-											bg="white"
-											borderColor="#d8dee4"
-											size="sm"
-											borderRadius="6px" />
-										
 									</FormControl>
 
 									<Button
@@ -132,11 +120,20 @@ function LogInForm() {
 										_hover={{ bg: '#2c974b' }}
 										_active={{ bg: '#298e46' }}
 										onClick={handleSubmit}
-										as={'a'} href='/dashboard'
+										disabled={loading}
 									>
+										{loading && (<span className="spinner-border spinner-border-sm"></span>)}
 										Sign in
 									</Button>
+									{message && (
+										<div className="col-12">
+											<div className="alert alert-danger" role="alert">
+												{message}
+											</div>
+										</div>
+									)}
 								</Stack>
+								<CheckButton style={{ display: "none" }} ref={checkBtn} />
 							</form>
 						</Stack>
 					</CardBody>
@@ -160,6 +157,6 @@ function LogInForm() {
 			</Center>
 		</VStack>
 	);
-}
+};
 
 export default LogInForm;
