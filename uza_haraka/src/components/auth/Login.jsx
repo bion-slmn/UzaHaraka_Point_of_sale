@@ -13,9 +13,11 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CheckButton from "react-validation/build/button";
+import { login } from "../../actions/auth";
+import { useForm } from "react-hook-form";
 
 const LogInForm = () => {
 	const form = useRef()
@@ -119,7 +121,7 @@ const LogInForm = () => {
 										size="sm"
 										_hover={{ bg: '#2c974b' }}
 										_active={{ bg: '#298e46' }}
-										onClick={handleSubmit}
+										onClick={handleLogin}
 										disabled={loading}
 									>
 										{loading && (<span className="spinner-border spinner-border-sm"></span>)}
