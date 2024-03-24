@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .serializer import (
         CategorySerializer,
+        CategoryNoProductSerializer,
         PurchaseSerializer,
         SalesSerializer,
         ProductSerializer,
@@ -23,7 +24,7 @@ def view_categories(request):
     view all the categories
     '''
     categories = Category.objects.all()
-    serial = CategorySerializer(categories, many=True)
+    serial = CategoryNoProductSerializer(categories, many=True)
     return Response(serial.data, status.HTTP_200_OK)
 
 
@@ -32,6 +33,7 @@ def view_categories(request):
 def view_a_category(request):
     '''
     view a specific category and the products associated with
+    using a serialiser that can read the many side of the relationship
     '''
     id = request.query_params.get('id')
     try:
