@@ -13,60 +13,53 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import CheckButton from "react-validation/build/button";
-import { login } from "../../actions/auth";
+// import { useNavigate, Navigate } from 'react-router-dom'
+// import { useDispatch, useSelector } from 'react-redux'
+// import CheckButton from "react-validation/build/button";
+// import { login } from "../../actions/auth";
 import { useForm } from "react-hook-form";
 
 const LogInForm = () => {
-	const form = useRef()
-	const checkBtn = useRef()
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
-	const [loading, setLoading] = useState(false)
-	const navigate = useNavigate()
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [error, setError] = useState(null);
 
-	const { isLoggedIn } = useSelector((state) => state.auth)
-	const { message } = useSelector((state) => state.message)
-	const dispatch = useDispatch()
+	const handleLogin = async (e) => {
+		e.preventDefault();
 
-	const onChangeUsername = (e) => {
-		const username = e.target.value;
-		setUsername(username);
-	};
+		try {
+			const response = await fetch('/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ username, password }),
+			});
 
-	const onChangePassword = (e) => {
-		const password = e.target.value;
-		setPassword(password);
-	};
+			if (!response.ok) {
+				// Handle error responses from the server
+				setError('Invalid username or password');
+				return;
+			}
 
-	const handleLogin = (e) => {
-		e.preventDefault()
+			const data = await response.json();
+			// Assuming server responds with a token
+			const token = data.token;
 
-		setLoading(true);
+			// You can then store the token in local storage or session storage
+			localStorage.setItem('token', token);
 
-		form.current.validateAll();
-		if (checkBtn.current.context._errors.length === 0) {
-			dispatch(login(username, password))
-				.then(() => {
-					navigate("/dashboard");
-					window.location.reload();
-				})
-				.catch(() => {
-					setLoading(false);
-				});
-		} else {
-			setLoading(false);
+			// Redirect or do whatever you need upon successful login
+			// For example, redirect to a dashboard page
+			window.location.href = '/dashboard';
+		} catch (error) {
+			console.error('Error during login:', error);
+			setError('An error occurred during login');
 		}
 	};
-	if (isLoggedIn) {
-		return <Navigate to="/dashboard" />;
-	}
-
 
 	return (
-		<VStack as="form" spacing="4" onSubmit={handleLogin} ref={form}>
+		<VStack >
 			<Center>
 				<Card bg="facebook" spacing="6" mt="8" variant="outline" shadow={'lg'} w="450px">
 					<CardBody>
@@ -83,7 +76,7 @@ const LogInForm = () => {
 								</Heading>
 							</VStack>
 							<Stack />
-							<form>
+							<form onSubmit={handleLogin}>
 								<Stack spacing="4">
 									<FormControl>
 										<FormLabel size="sm">Username</FormLabel>
@@ -91,28 +84,29 @@ const LogInForm = () => {
 											type="text"
 											bg="white"
 											borderColor="#d8dee4"
-											ref={useRef}
 											size="sm"
 											borderRadius="6px"
 											value={username}
 											autoComplete='off'
 											required
-											onChange={onChangeUsername}
+											onChange={(e) => setUsername(e.target.value)}
 										/>
 
 									</FormControl>
 									<FormControl>
-										<HStack justify="space-between">
-											<FormLabel size="sm">Password</FormLabel>
-											<Input
-												type="password"
-												name='password'
-												value={password}
-												onChange={onChangePassword}
-												required
-											/>
+										<FormLabel size="sm">Password</FormLabel>
+										<Input
+											type="password"
+											name='password'
+											size={'sm'}
+											bg="white"
+											borderColor="#d8dee4"
+											borderRadius="6px"
 
-										</HStack>
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+											required
+										/>
 									</FormControl>
 
 									<Button
@@ -121,21 +115,14 @@ const LogInForm = () => {
 										size="sm"
 										_hover={{ bg: '#2c974b' }}
 										_active={{ bg: '#298e46' }}
-										onClick={handleLogin}
-										disabled={loading}
+										type='submit'
+
 									>
-										{loading && (<span className="spinner-border spinner-border-sm"></span>)}
+
 										Sign in
 									</Button>
-									{message && (
-										<div className="col-12">
-											<div className="alert alert-danger" role="alert">
-												{message}
-											</div>
-										</div>
-									)}
+									{error && <p>{error}</p>}
 								</Stack>
-								<CheckButton style={{ display: "none" }} ref={checkBtn} />
 							</form>
 						</Stack>
 					</CardBody>
