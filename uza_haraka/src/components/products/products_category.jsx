@@ -7,18 +7,18 @@ const ProductCategory = ({ products, addToCart }) => {
   const { categoryId } = useParams();
 
   // Filter products based on categoryId
-  const categoryProducts = products.filter(product => product.categoryId === categoryId);
+  const categoryProducts = products.filter(products => products.categoryId === categoryId);
 
   return (
     <VStack spacing={4}>
-      {categoryProducts.map(product => (
-        <Card key={product.id} bg="gray.200" shadow="md" p={4} maxW="md">
-          <img src={product.image} alt={product.name} />
+      {categoryProducts.map(product_set => (
+        <Card key={product_set.id} bg="gray.200" shadow="md" p={4} maxW="md">
+          <img src={product_set.image} alt={product_set.name} />
           <Heading as="h3" size="md" mt={2}>
-            {product.name}
+            {product_set.name}
           </Heading>
-          <Text>${product.price}</Text>
-          <Button onClick={() => addToCart(product)}>Add to Cart</Button>
+          <Text>${product_set.selling_price}</Text>
+          <Button onClick={() => addToCart(product_set)}>Add to Cart</Button>
         </Card>
       ))}
     </VStack>

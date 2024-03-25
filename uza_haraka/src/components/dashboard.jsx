@@ -54,7 +54,7 @@ export default function Dashboard() {
     return cart.reduce((total, product) => total + product.price, 0);
   };
 
-  console.log(csrftoken, sessionid);
+  // console.log(csrftoken, sessionid);
   useEffect(() => {
     // Function to fetch product categories
     const fetchCategories = async () => {
@@ -80,11 +80,42 @@ export default function Dashboard() {
         setError('Failed to fetch categories');
       }
     };
-
-    // Call fetchCategories function when component mounts
     fetchCategories();
-  }, []); // Empty dependency array ensures the effect runs only once on component mount
+  }, []);
 
+  const handleCategoryClick = async (categoryId) => {
+    console.log(123,categoryId)
+
+    try {
+      const response = await fetch(`http://localhost:8000/product/view-a-category/?id=${categoryId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token from cookie
+          'Cookie': 'sessionid=' + getCookie('sessionid') + ';csrftoken=' + getCookie('csrftoken')
+        },
+        
+      });
+      
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch products for the category');
+      }
+
+      const responseData = await response.json(); // Extract JSON data from response
+      console.log(responseData.products_set); // Access the data from the response
+      setProducts(responseData.products_set); // Set products state with fetched data
+
+      // Handle the response to show the products in the category
+    } catch (error) {
+      console.error('Error fetching products for the category:', error);
+      // Handle error
+    }
+    
+  };
+
+  // Empty dependency array ensures the effect runs only once on component mount
+  // console.log(products);
   // Extracting categoryId from the URL path
   const { categoryId } = useParams();
 
@@ -96,7 +127,7 @@ export default function Dashboard() {
         <VStack>
           {/* Render categories */}
           {categories.map(category => (
-            <Link key={category.id} to={`/category/${category.id}`}>
+            <Link key={category.id} to={`/category/${category.id}`} onClick={() => handleCategoryClick(category.id)}>
               <Card maxW="md" p={4} shadow="md" mb={4}>
                 <Heading as="h1" fontSize="30px" letterSpacing="-0.5px" color="#2da44e" fontWeight="bold">
                   {category.name}
