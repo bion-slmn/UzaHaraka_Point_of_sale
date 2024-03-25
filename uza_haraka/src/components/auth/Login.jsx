@@ -12,29 +12,37 @@ import {
 	Stack,
 	VStack,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 // import { useNavigate, Navigate } from 'react-router-dom'
 // import { useDispatch, useSelector } from 'react-redux'
 // import CheckButton from "react-validation/build/button";
 // import { login } from "../../actions/auth";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 
-const LogInForm = () => {
+function LogInForm() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(null);
 
+
 	const handleLogin = async (e) => {
 		e.preventDefault();
-
+		console.log(username, password)
 		try {
-			const response = await fetch('/api/login', {
+			const response = await fetch('http://localhost:8000/user/login/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					// 'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token from cookie
 				},
-				body: JSON.stringify({ username, password }),
+
+				// credentials: 'include', // Include cookies in the request
+				body: JSON.stringify({
+					username: username,
+					password: password
+				  })
 			});
+
 
 			if (!response.ok) {
 				// Handle error responses from the server
@@ -42,12 +50,13 @@ const LogInForm = () => {
 				return;
 			}
 
-			const data = await response.json();
-			// Assuming server responds with a token
-			const token = data.token;
+			const responseData = await response.json();
+			// Assuming server responds with a username and profile pic
+			const { username: responseDataUsername, profilePic } = responseData;
 
-			// You can then store the token in local storage or session storage
-			localStorage.setItem('token', token);
+			// Do something with the user data, like storing in local storage
+			localStorage.setItem('username', responseDataUsername);
+			localStorage.setItem('profilePic', profilePic);
 
 			// Redirect or do whatever you need upon successful login
 			// For example, redirect to a dashboard page
@@ -55,8 +64,14 @@ const LogInForm = () => {
 		} catch (error) {
 			console.error('Error during login:', error);
 			setError('An error occurred during login');
+			console.log(error)
 		}
 	};
+	// Function to get CSRF token from cookies
+	// function getCookie(name) {
+	// 	const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+	// 	return cookieValue ? cookieValue.pop() : '';
+	// }
 
 	return (
 		<VStack >
