@@ -1,80 +1,95 @@
-import React from 'react'
-import NavBar from './navbar'
-import SideBar from './sidebar'
-import FooterView from './footer'
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react';
-import { Button, Heading, Text } from '@chakra-ui/react'
+import React, {  useState } from 'react';
+import { Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Heading, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Flex } from '@chakra-ui/react';
+// import { useNavigate } from 'react-router-dom';
+import FooterView from './footer';
+import NavBar from './navbar';
+import SideBar from './sidebar';
 
-export default function CheckOut() {
-    return ( 
-      <>
-        <NavBar />
-        <div className='flex flex-row justify-between gap-2 w-full'>
-          <SideBar />
-          <div className="flex flex-col flex-end h-full w-full gap-4 md:order-1">
-          {/* <div className="flex flex-col flex-end w-300 md:order-2"> */}
-            <Table hoverable>
-              <TableHead>
-                <TableHeadCell>Product name</TableHeadCell>
-                <TableHeadCell>Color</TableHeadCell>
-                <TableHeadCell>Category</TableHeadCell>
-                <TableHeadCell>Price</TableHeadCell>
-                <TableHeadCell>
-                  <span className="sr-only">Edit</span>
-                </TableHeadCell>
-              </TableHead>
-              <TableBody className="divide-y">
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {'Apple MacBook Pro 17"'}
-                  </TableCell>
-                  <TableCell>Sliver</TableCell>
-                  <TableCell>Laptop</TableCell>
-                  <TableCell>$2999</TableCell>
-                  <TableCell>
-                    <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                      Remove
-                    </a>
-                  </TableCell>
-                </TableRow>
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    Microsoft Surface Pro
-                  </TableCell>
-                  <TableCell>White</TableCell>
-                  <TableCell>Laptop PC</TableCell>
-                  <TableCell>$1999</TableCell>
-                  <TableCell>
-                    <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                      Remove
-                    </a>
-                  </TableCell>
-                </TableRow>
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">Magic Mouse 2</TableCell>
-                  <TableCell>Black</TableCell>
-                  <TableCell>Accessories</TableCell>
-                  <TableCell>$99</TableCell>
-                  <TableCell>
-                    <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                      Remove
-                    </a>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-          <div className="flex flex-col h-full gap-4 md:order-1 mr-4 shadow-md rounded-xl p-4">
-            <Heading>ORDER LIST</Heading>
-            <Text>Item1</Text>
-            <Text>Item2</Text>
-            <Text>Item3</Text>
-            <Text fontWeight={'bold'}>Total</Text>
-            <Button as={'a'} href='/checkout' bgColor={'blue'} textColor={'white'}>Confirm Checkout</Button>
-          </div>
-        
-      </div>
-      <FooterView />
-    </>
-  )
+const Checkout = ({ cart, calculateSubtotal }) => {
+  // const [navigate] = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [updatedCart, setUpdatedCart] = useState(cart);
+  
+
+  const handleRemoveFromCart = (productId) => {
+    const updatedCart = cart.filter(product => product.id !== productId);
+    setUpdatedCart(updatedCart);
+  };
+
+
+  const handleConfirmCheckout = () => {
+    // Logic for confirming checkout and storing transaction details
+    // Redirect to dashboard after payment confirmation
+    onClose(); // Close modal
+    // navigate('/dashboard'); // Redirect to dashboard
+  };
+
+ 
+
+  return (
+    <>
+      <NavBar />
+      <Flex direction="row" justify="space-between" w="full">
+        <SideBar />
+        <VStack spacing={4} align="stretch">
+          {/* Table to display products */}
+          <Table hoverable variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Product Name</Th>
+                <Th>Price</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {updatedCart.map((product, index) => (
+                <Tr key={index}>
+                  <Td>{product.name}</Td>
+                  <Td>${product.price}</Td>
+                  <Td>
+                    <Button colorScheme="red" size="sm" onClick={() => handleRemoveFromCart(product.id)}>Remove</Button>
+                  </Td>
+                </Tr>
+              ))}
+              <Tr>
+                <Td colSpan={2}>Total:</Td>
+                {/* <Td>${calculateSubtotal()}</Td> */}
+              </Tr>
+            </Tbody>
+          </Table>
+
+          {/* Card showing total amount */}
+          <Box p={4} shadow="md" rounded="xl" bg="whatsapp.500" color="white">
+            <Heading fontSize="lg">Total Amount</Heading>
+            {/* <Text fontSize="2xl">${calculateSubtotal()}</Text> */}
+          </Box>
+
+          {/* Confirm Checkout Modal */}
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Confirm Checkout</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                {/* <Text fontSize="lg">Total Amount: ${calculateSubtotal()}</Text> */}
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="whatsapp" mr={3} onClick={handleConfirmCheckout}>
+                  Pay with MPESA
+                </Button>
+                <Button colorScheme="whatsapp" onClick={handleConfirmCheckout}>
+                  Pay Cash
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+
+          {/* Button to open Confirm Checkout Modal */}
+          <Button colorScheme="blue" onClick={onOpen}>Confirm Checkout</Button>
+        </VStack>
+        <FooterView />
+        </Flex>
+      </>
+    );
 }
+export default Checkout;
