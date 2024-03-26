@@ -172,4 +172,38 @@ curl -X POST localhost:8000/product/make-sales/ \
 
 RETURNS
 "Sucessful sale"
+``
+
+## To search for any item by name
+### GET /product/search/?name=lapTOP
+
+the item being searched is passed as a query parameter 'name'. In the above example laptop is passed
+RETURNS:  alist if products that contain that name. Its case insensitive
+
+
+```
+[
+    {
+        "id": "d1f88b3f-4efe-473e-a27c-524c90c6b73f",
+        "created_at": "2024-03-22T20:23:02.709758+03:00",
+        "updated_at": "2024-03-23T12:52:33.496008+03:00",
+        "name": "hp laptop",
+        "quantity": 65,
+        "buying_price": 21000.0,
+        "selling_price": 25000.0,
+        "product_image": "/media/images/hp.jfif",
+        "category": "96775063-0b49-494f-b187-e3e332f41728"
+    },
+    {
+        "id": "bf6bf3e4-1760-4e40-828a-9edabfdd5908",
+        "created_at": "2024-03-23T18:14:36.790869+03:00",
+        "updated_at": "2024-03-23T18:14:36.790900+03:00",
+        "name": "HUawei mate Laptop",
+        "quantity": 40,
+        "buying_price": 30000.0,
+        "selling_price": 50000.0,
+        "product_image": "/media/images/huawei_laptop.jfif",
+        "category": "3b192771-0ed0-4c9a-a4ac-99fb810f1215"
+    }
+]
 ```

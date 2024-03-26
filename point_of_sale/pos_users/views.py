@@ -20,6 +20,10 @@ def login(request):
     '''
     name = request.data.get('username')
     password = request.data.get('password')
+
+    if not name or not password:
+        return Response('Name and Password is a must', status=status.HTTP_404_NOT_FOUND)
+
     
     user_obj = ''
     if '@' in name:
@@ -45,7 +49,7 @@ def login(request):
 
         name = {
                 'username': user.username,
-                'profilePic': pic.url
+                'profilePic': pic.url if pic else None
                 }
         return Response(name, status=status.HTTP_200_OK)
     return Response('Check that password', status=status.HTTP_404_NOT_FOUND)

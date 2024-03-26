@@ -18,7 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def view_categories(request):
     '''
     view all the categories
@@ -29,7 +29,7 @@ def view_categories(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def view_a_category(request):
     '''
     view a specific category and the products associated with
@@ -76,7 +76,7 @@ def view_a_product(request):
 
 # view all sales by that user
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def view_sales(request):
     '''view all sales from a particular employee
     '''
@@ -129,3 +129,18 @@ def make_sales(request):
         return Response(error, status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response(e, status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def search_by_name(request):
+    '''
+    search a product by name in the database
+    the name of the product is passed as query parameter
+    '''
+    search = request.query_params.get('name')
+    if not search:
+        return Response('')
+    product = Product.objects.filter(name__icontains=search)
+    serializer = ProductSerializer(product, many=True)
+    return Response(serializer.data)

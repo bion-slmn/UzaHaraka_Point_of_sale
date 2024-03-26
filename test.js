@@ -67,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 productsHTML += `
                     <div class="product">
                         <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <img src="${product.product_image}" alt="${product.name}">
+                        
+                        <img src="http://localhost:8000${product.product_image}" alt="${product.name}">
                     </div>`;
             });
             document.getElementById('products').innerHTML = productsHTML;
