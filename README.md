@@ -172,7 +172,7 @@ curl -X POST localhost:8000/product/make-sales/ \
 
 RETURNS
 "Sucessful sale"
-``
+```
 
 ## To search for any item by name
 ### GET /product/search/?name=lapTOP
