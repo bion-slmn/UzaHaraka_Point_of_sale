@@ -144,16 +144,36 @@ RETURNS:
 ## To view all sales of the logged in employee.
 If the employeee is logged in and would like to read the sales he has done
 ### product/view-sales/
-GET: This is a get request to vview sales of the logged in user
-RETURNS: A list of all sales with status code 200 or  403 if not authenicated
+GET: This is a get request to vview sales 
+RETURNS: A list of all sales with status code 200
 ```
 curl -X GET localhost:8000/product/view-sales/ -H "X-CSRFToken: 2XORN895V8mX8oUPuZDB1Qhz3PoELUVC" -H "Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3Po
 ELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" 
 
 RETURNS:
 [
-{"id":"51789d15-bc68-4121-b958-4c902c913432","created_at":"2024-03-21T13:16:14.429737+03:00","updated_at":"2024-03-21T13:16:14.429803+03:00","quantity":12,"selling_price":15000.0,"total":180000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3},
-{"id":"0f2941ae-47d8-4de2-93ee-aeb540b01781","created_at":"2024-03-22T09:10:31.849246+03:00","updated_at":"2024-03-22T09:10:31.849393+03:00","quantity":5,"selling_price":15000.0,"total":75000.0,"product":"69e034a1-d9ea-4ccb-a4d8-9c1598782650","user":3}
+    {
+        "id": "f13739f2-e73b-4e14-af67-1a2b3bf170d4",
+        "product_name": "spark 4",
+        "created_at": "2024-03-27T12:31:29.310701+03:00",
+        "updated_at": "2024-03-27T12:31:29.310757+03:00",
+        "quantity": 5,
+        "selling_price": 15000.0,
+        "total": 75000.0,
+        "product": "69e034a1-d9ea-4ccb-a4d8-9c1598782650",
+        "user": 3
+    },
+    {
+        "id": "d3d35c8a-47c6-4959-b559-a1297c935a1b",
+        "product_name": "spark 4",
+        "created_at": "2024-03-27T12:23:10.674646+03:00",
+        "updated_at": "2024-03-27T12:23:10.674696+03:00",
+        "quantity": 5,
+        "selling_price": 15000.0,
+        "total": 75000.0,
+        "product": "69e034a1-d9ea-4ccb-a4d8-9c1598782650",
+        "user": 3
+    },
 ]
 ``` 
 

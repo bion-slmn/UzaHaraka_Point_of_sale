@@ -71,6 +71,7 @@ class Sales(BaseModel):
 
     class Meta:
         verbose_name_plural = "Sales"
+        ordering = ['-created_at']
 
 
 class Purchase(BaseModel):

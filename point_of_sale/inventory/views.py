@@ -45,7 +45,7 @@ def view_a_category(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_all_products(request):
     '''
     list all products in the database
@@ -58,9 +58,8 @@ def view_all_products(request):
     return Response(serializer.data, status.HTTP_200_OK)
 
 
-
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_a_product(request):
     '''
     view the details of a single product
@@ -76,19 +75,16 @@ def view_a_product(request):
 
 # view all sales by that user
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_sales(request):
     '''view all sales from a particular employee
     '''
-    user = request.user
-
-    sales = user.sales_set.all()
-    serializer = SalesSerializer(sales, many=True)
+    serializer = SalesSerializer(Sales.objects.all(), many=True)
     return Response(serializer.data, status.HTTP_200_OK)
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def view_a_sales(request):
     '''
     view a specific sale
@@ -103,15 +99,14 @@ def view_a_sales(request):
 
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def make_sales(request):
     '''
     make a sales, it accepts sales of different items
     in an array of objects
     '''
 
-    sales = request.data.get('sales')
-    print(sales, "sale being passed")
+    sales = request.data
     if not sales:
 
         return Response('Sales cant be empty', status.HTTP_404_NOT_FOUND)
@@ -130,27 +125,28 @@ def make_sales(request):
             sale = Sales.objects.create(
                     product=pdt_obj,
                     quantity=sale.get('quantity', 0.0),
-                    selling_price=sale.get('selling_price',0.0),
-                    user=request.user
+                    selling_price=sale.get('selling_price', 0.0),
+                    user=None
                     )
-            
+
             response.append({
                              pdt_obj.name: 'Sucessful sale',
+                             'quantity': sale.get('quantity', 0.0),
                              'status': status.HTTP_200_OK
                              })
         except (ValidationError, Exception) as error:
             # a signal raises the error if the quantity of sale
             # is higher than the inventory
             response.append({
-                            pdt_obj.name: str(error), 
+                            pdt_obj.name: str(error),
+                            'quantity': sale.get('quantity', 0.0),
                             'status': status.HTTP_400_BAD_REQUEST
                             })
     return Response(response, status=status.HTTP_200_OK)
 
 
-
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def search_by_name(request):
     '''
     search a product by name in the database
