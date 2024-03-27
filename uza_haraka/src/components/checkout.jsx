@@ -1,12 +1,13 @@
-import React, {  useState } from 'react';
-import { Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Heading, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Flex } from '@chakra-ui/react';
-// import { useNavigate } from 'react-router-dom';
+import React, {  useEffect, useState } from 'react';
+import { Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Heading, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Flex, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import FooterView from './footer';
 import NavBar from './navbar';
 import SideBar from './sidebar';
 
+
 const Checkout = ({ cart, calculateSubtotal }) => {
-  // const [navigate] = useNavigate();
+  const [navigate] = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [updatedCart, setUpdatedCart] = useState(cart);
   
@@ -21,10 +22,11 @@ const Checkout = ({ cart, calculateSubtotal }) => {
     // Logic for confirming checkout and storing transaction details
     // Redirect to dashboard after payment confirmation
     onClose(); // Close modal
-    // navigate('/dashboard'); // Redirect to dashboard
+    navigate('/dashboard'); // Redirect to dashboard
   };
-
- 
+useEffect(() => {
+  console.log(updatedCart);
+}, [updatedCart]);
 
   return (
     <>
@@ -42,7 +44,7 @@ const Checkout = ({ cart, calculateSubtotal }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {updatedCart.map((product, index) => (
+            {updatedCart.map((product, index) => (
                 <Tr key={index}>
                   <Td>{product.name}</Td>
                   <Td>${product.price}</Td>
@@ -53,7 +55,7 @@ const Checkout = ({ cart, calculateSubtotal }) => {
               ))}
               <Tr>
                 <Td colSpan={2}>Total:</Td>
-                {/* <Td>${calculateSubtotal()}</Td> */}
+                <Td>${calculateSubtotal()}</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -61,7 +63,7 @@ const Checkout = ({ cart, calculateSubtotal }) => {
           {/* Card showing total amount */}
           <Box p={4} shadow="md" rounded="xl" bg="whatsapp.500" color="white">
             <Heading fontSize="lg">Total Amount</Heading>
-            {/* <Text fontSize="2xl">${calculateSubtotal()}</Text> */}
+            <Text fontSize="2xl">${calculateSubtotal()}</Text>
           </Box>
 
           {/* Confirm Checkout Modal */}
