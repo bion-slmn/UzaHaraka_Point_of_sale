@@ -103,32 +103,50 @@ def view_a_sales(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def make_sales(request):
     '''
-    make a sales
+    make a sales, it accepts sales of different items
+    in an array of objects
     '''
-    id = request.data.get('id')
-    qty = int(request.data.get('quantity'))
-    selling_price = float(request.data.get('selling_price'))
 
-    try:
-        pdt_obj = get_object_or_404(Product, pk=id)
-        sale = Sales.objects.create(
-                product=pdt_obj,
-                quantity=qty,
-                selling_price=selling_price,
-                user=request.user
-                )
-        print(12323)
-        return Response('Sucessful sale', status.HTTP_201_CREATED)
-    except ValidationError as error:
-        # a signal raises the error if the quantity of sale
-        # is higher than the inventory
-        
-        return Response(error, status.HTTP_400_BAD_REQUEST)
-    except Exception as e:
-        return Response(e, status.HTTP_404_NOT_FOUND)
+    sales = request.data.get('sales')
+    print(sales, "sale being passed")
+    if not sales:
+
+        return Response('Sales cant be empty', status.HTTP_404_NOT_FOUND)
+
+    if not isinstance(sales, list):
+        return Response('Sales must be an array', status.HTTP_400_BAD_REQUEST)
+
+    response = []
+    # add the sale in the database
+    for sale in sales:
+        if not sale.get('id'):
+            print('has no id')
+            continue
+        pdt_obj = get_object_or_404(Product, pk=sale['id'])
+        try:
+            sale = Sales.objects.create(
+                    product=pdt_obj,
+                    quantity=sale.get('quantity', 0.0),
+                    selling_price=sale.get('selling_price',0.0),
+                    user=request.user
+                    )
+            
+            response.append({
+                             pdt_obj.name: 'Sucessful sale',
+                             'status': status.HTTP_200_OK
+                             })
+        except (ValidationError, Exception) as error:
+            # a signal raises the error if the quantity of sale
+            # is higher than the inventory
+            response.append({
+                            pdt_obj.name: str(error), 
+                            'status': status.HTTP_400_BAD_REQUEST
+                            })
+    return Response(response, status=status.HTTP_200_OK)
+
 
 
 @api_view(['GET'])

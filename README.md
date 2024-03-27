@@ -159,19 +159,20 @@ RETURNS:
 
 ## To make a sale of the product
 ### /product/make-sales/
-POST: post request to make a sale. In the boddy of the request the id of the product must be passed,
-quantity to be soldm and selling price
+POST: post request to make  sales. In the boddy of the request a list called sales should be passed of dict(objects in js) containing the id , quantity and selling price of the item to be sold. One or more items can be sold
+
 RETURNs
-Successful Sale with status code 201 if suceess 401 if not authorised  or 404 if no product found
+a list of of items sold with the status code and error message if any else success message
 ```
 curl -X POST localhost:8000/product/make-sales/ \
-> -H "Content-Type: application/json" \
-> -H "X-CSRFToken: 2XORN895V8mX8oUPuZDB1Qhz3PoELUVC" \
-> -H "Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3PoELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" \
-> -d '{"id": "69e034a1-d9ea-4ccb-a4d8-9c1598782650", "quantity": 5, "selling_price": 20}  
+-H "Content-Type: application/json" \
+-H "X-CSRFToken: 2XORN895V8mX8oUPuZDB1Qhz3PoELUVC" \
+-H "Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3PoELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" \
+-d '{"sales": [{"id": "69e034a1-d9ea-4ccb-a4d8-9c1598782650", "quantity": 5, "selling_price": 20}]}'
+
 
 RETURNS
-"Sucessful sale"
+[{"spark 4":"Sucessful sale","status":200}]   
 ```
 
 ## To search for any item by name
