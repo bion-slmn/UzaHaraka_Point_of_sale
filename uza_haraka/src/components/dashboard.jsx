@@ -136,8 +136,8 @@ export default function Dashboard() {
       <Flex direction="row" justify={'space-between'} w="full" columns={{ sm: 2, md: 4 }} >
         <SideBar />
         <Flex direction={'column'} justify={'center'} alignItems={'center'} >
+          <Heading size="lg" mb={4} mt={0}>Product Categories</Heading>
           <Flex direction="row" spacing={4} gap={4} marginTop={0} >
-            <Heading size="md">Product Categories</Heading>
             {categories.map(category => (
               <Button
                 key={category.id}
@@ -165,7 +165,7 @@ export default function Dashboard() {
                     <Heading as="h3" size="md">
                       {product.name}
                     </Heading>
-                    <Text>${product.selling_price}</Text>
+                    <Text>KSh.{product.selling_price}</Text>
                     <Button mt={2} colorScheme="blue" onClick={() => addToCart(product)}>
                       Add to Cart
                     </Button>
@@ -191,14 +191,14 @@ export default function Dashboard() {
                   <tr key={index}>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
-                    <td>${item.selling_price * item.quantity}</td>
+                    <td>KSh.{item.selling_price * item.quantity}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <Text fontWeight={'bold'}>Total: ${subtotal}</Text>
-          <div><Button colorScheme="blue" onClick={onOpen}>Confirm Checkout</Button></div>
+          <Text fontWeight={'bold'}>Total: KSh.{subtotal}</Text>
+          <div className='center'><Button colorScheme="blue" onClick={onOpen}>Confirm Checkout</Button></div>
         </div>
         <Modal isOpen={isOpen}>
           <ModalOverlay />
@@ -206,7 +206,7 @@ export default function Dashboard() {
             <ModalHeader>Confirm Checkout</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Text fontSize="lg">Total Amount: ${subtotal}</Text>
+              <Text fontSize="lg">Total Amount: KSh.{subtotal}</Text>
             </ModalBody>
             <ModalFooter>
               {isLoading ? (

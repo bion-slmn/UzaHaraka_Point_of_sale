@@ -17,7 +17,7 @@ function NavBar() {
     setUser(ourUser);
   }, [])
   return (
-    <Navbar fluid rounded className='bg-teal-50 shadow-lg mb-4 w-full h-18 p-4' >
+    <Navbar fluid rounded className=' bg-gray-900 h-20 mb-4 shadow-lg p-4 justify-between' >
       <Navbar.Brand href="#">
         <span className="self-center whitespace-nowrap text-green-500 text-xl text-teal font-extrabold dark:text-green-500">UzaHaraka</span>
       </Navbar.Brand>
