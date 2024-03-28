@@ -1,3 +1,7 @@
+'''
+create signals to update the quantities of the product on
+sale and addition of stock
+'''
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from .models import Product, Sales, Purchase
@@ -19,6 +23,7 @@ def update_inventory(sender, instance, **kwargs):
 
     product.quantity -= instance.quantity
     product.save()
+
 
 # we use pre so that the new total is calculated using
 # new buying price
