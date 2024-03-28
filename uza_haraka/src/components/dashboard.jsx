@@ -214,10 +214,10 @@ export default function Dashboard() {
               ) : (
                 <>
                   <Button colorScheme="whatsapp" mr={3} onClick={handleConfirmCheckout}>
-                    Pay with MPESA
+                    Pay
                   </Button>
                   <Button colorScheme="whatsapp" onClick={() => { onClose(); showToast(); }}>
-                    Pay Cash
+                    Confirm
                   </Button>
                 </>
               )}
