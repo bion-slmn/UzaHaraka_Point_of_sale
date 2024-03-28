@@ -1,6 +1,8 @@
+'''
+serialising django objects to python structures
+'''
 from .models import Product, Sales, Category, Purchase
 from rest_framework import serializers
-
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -10,6 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
 
 class SalesSerializer(serializers.ModelSerializer):
     # specify model and fields
@@ -39,14 +42,15 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     '''
-    serialize the category plus its relationship 
+    serialize the category plus its relationship
     with the product
     '''
     product_set = ProductSerializer(many=True)
 
     class Meta:
         model = Category
-        fields =  '__all__'
+        fields = '__all__'
+
 
 class CategoryNoProductSerializer(serializers.ModelSerializer):
     '''
@@ -55,5 +59,4 @@ class CategoryNoProductSerializer(serializers.ModelSerializer):
     '''
     class Meta:
         model = Category
-        fields =  '__all__'
-
+        fields = '__all__'
