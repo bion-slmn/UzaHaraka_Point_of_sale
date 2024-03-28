@@ -1,3 +1,8 @@
+
+'''
+registering signals so that, they are called when
+django in ready
+'''
 from django.apps import AppConfig
 
 
