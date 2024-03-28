@@ -10,14 +10,14 @@ function NavBar() {
   })
   useEffect(() => {
     const ourUser = {
-      name: 'Peter',
-      avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
+      name: 'username',
+    avatar: 'profilePicture',
     }
-
+   console.log(user);
     setUser(ourUser);
   }, [])
   return (
-    <Navbar fluid rounded className=' bg-gray-900 h-20 mb-4 shadow-lg p-4 justify-between' >
+    <Navbar fluid rounded className=' bg-teal-100 h-20 mb-4 shadow-lg p-4 justify-between' >
       <Navbar.Brand href="#">
         <span className="self-center whitespace-nowrap text-green-500 text-xl text-teal font-extrabold dark:text-green-500">UzaHaraka</span>
       </Navbar.Brand>
@@ -30,7 +30,7 @@ function NavBar() {
           arrowIcon={false}
           inline
           label={
-            <Avatar alt="User settings" img={user.avatar} className='w-10 h-10 rounded-full' />
+            <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" className='w-10 h-10 rounded-full' />
           }
         >
           <Dropdown.Item>{user.name}</Dropdown.Item>

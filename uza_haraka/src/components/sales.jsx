@@ -50,7 +50,7 @@ function Sales() {
                                 <Tr key={index} _hover={{ bg: "gray.100" }}>
                                     <Td>{item.product_name}</Td>
                                     <Td>{item.quantity}</Td>
-                                    <Td>${item.selling_price * item.quantity}</Td>
+                                    <Td>KSh.{item.selling_price * item.quantity}</Td>
                                     <Td>{item.updated_at}</Td>
                                 </Tr>
                             ))}

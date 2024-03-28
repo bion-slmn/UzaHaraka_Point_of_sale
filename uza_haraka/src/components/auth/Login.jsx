@@ -13,11 +13,7 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react'
-// import { useNavigate, Navigate } from 'react-router-dom'
-// import { useDispatch, useSelector } from 'react-redux'
-// import CheckButton from "react-validation/build/button";
-// import { login } from "../../actions/auth";
-// import { useForm } from "react-hook-form";
+
 
 function LogInForm() {
 	const [username, setUsername] = useState('');
@@ -53,7 +49,8 @@ function LogInForm() {
 			const responseData = await response.json();
 			// Assuming server responds with a username and profile pic
 			const { username: responseDataUsername, profilePic } = responseData;
-
+			console.log(username, profilePic)
+			
 			// Do something with the user data, like storing in local storage
 			localStorage.setItem('username', responseDataUsername);
 			localStorage.setItem('profilePic', profilePic);

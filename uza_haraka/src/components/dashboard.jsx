@@ -175,7 +175,7 @@ export default function Dashboard() {
             </SimpleGrid>
           </Flex>
         </Flex>
-        <div className="flex flex-col w-72 h-72 overflow-y-scroll gap-4 md:order-1 mr-4 shadow-md rounded-xl p-4">
+        <div className="flex flex-col w-72 h-84 overflow-y-scroll gap-4 md:order-1 mr-4 shadow-md rounded-xl p-4">
           <Heading fontSize={22}>ORDER LIST</Heading>
           <div>
             <table>
