@@ -1,3 +1,7 @@
+'''
+contains endpoints for the user app such as login, logout and change passord
+A user is authenicated is by session based management
+'''
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -11,27 +15,32 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
 # Create your views here.
 @api_view(['POST'])
 def login(request):
     '''
-    login a user
+    login a user and create a session and crsftoken for the user,
+    user can login using email or username
     '''
     name = request.data.get('username')
     password = request.data.get('password')
 
     if not name or not password:
-        return Response('Name and Password is a must', status=status.HTTP_404_NOT_FOUND)
+        return Response(
+                        'Name and Password is a must',
+                        status=status.HTTP_404_NOT_FOUND
+                        )
 
-    
     user_obj = ''
     if '@' in name:
-        email=name
+        email = name
         try:
             user_obj = User.objects.get(email=email)
         except User.DoesNotExist:
-            return Response('Email not Known', status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                            'Email not Known',
+                            status=status.HTTP_404_NOT_FOUND
+                            )
 
     name = user_obj.username if user_obj else name
 
@@ -59,17 +68,9 @@ def login(request):
 @permission_classes([IsAuthenticated])
 def user_logout(request):
     '''
-    log out a user
+    log out a user, this deletes the sesion key in the database
     '''
     # genereate a report before loging out
-    user = request.user
-    today = timezone.now().date()
-    today_sales = user.sales_set.filter(created_at__date=today)
-    
-    total_sales = sum(sale.total for sale in today_sales)
-
-    print(today_sales, total_sales)
-
     logout(request)
     data = {'success': 'Sucessfully logged out'}
     return Response(data=data, status=status.HTTP_200_OK)
