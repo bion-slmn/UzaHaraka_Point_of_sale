@@ -17,6 +17,8 @@ class SalesSerializer(serializers.ModelSerializer):
     serialise the Sales model
     '''
     product_name = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     def get_product_name(self, obj):
         return obj.product.name

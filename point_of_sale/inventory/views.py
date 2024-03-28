@@ -124,8 +124,8 @@ def make_sales(request):
         try:
             sale = Sales.objects.create(
                     product=pdt_obj,
-                    quantity=sale.get('quantity', 0.0),
-                    selling_price=sale.get('selling_price', 0.0),
+                    quantity=sale['quantity'],
+                    selling_price=sale['selling_price'],
                     user=None
                     )
 
