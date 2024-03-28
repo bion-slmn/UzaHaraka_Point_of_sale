@@ -131,7 +131,6 @@ def make_sales(request):
 
             response.append({
                              pdt_obj.name: 'Sucessful sale',
-                             'quantity': sale.get('quantity', 0.0),
                              'status': status.HTTP_200_OK
                              })
         except (ValidationError, Exception) as error:
@@ -139,7 +138,6 @@ def make_sales(request):
             # is higher than the inventory
             response.append({
                             pdt_obj.name: str(error),
-                            'quantity': sale.get('quantity', 0.0),
                             'status': status.HTTP_400_BAD_REQUEST
                             })
     return Response(response, status=status.HTTP_200_OK)
