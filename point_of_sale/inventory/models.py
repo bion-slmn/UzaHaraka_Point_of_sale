@@ -1,3 +1,6 @@
+'''
+creating models to be mapped to the database for the inventory
+'''
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
@@ -47,7 +50,11 @@ class Product(BaseModel):
     buying_price = models.FloatField()
     selling_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    product_image = models.ImageField(upload_to='images/', null=True, blank=True)
+    product_image = models.ImageField(
+                                      upload_to='images/',
+                                      null=True,
+                                      blank=True
+                                      )
 
     def __str__(self):
         return self.name
@@ -56,7 +63,11 @@ class Product(BaseModel):
 class Sales(BaseModel):
     '''this records the sales history'''
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(
+                             User,
+                             on_delete=models.CASCADE,
+                             null=True
+                             )
     quantity = models.PositiveIntegerField()
     selling_price = models.FloatField()
     total = models.FloatField()
