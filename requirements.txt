@@ -9,3 +9,4 @@ djangorestframework==3.14.0
 pillow==10.2.0
 pymemcache==4.0.0
 django-cors-headers==4.3.1
+redis==5.0.3
