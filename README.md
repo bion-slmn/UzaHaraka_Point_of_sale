@@ -249,7 +249,7 @@ curl -X POST localhost:8000/product/make-sales/ \
 -H "Content-Type: application/json" \
 -H "X-CSRFToken: 2XORN895V8mX8oUPuZDB1Qhz3PoELUVC" \
 -H "Cookie: csrftoken=2XORN895V8mX8oUPuZDB1Qhz3PoELUVC; sessionid=gc8knitxkpzuuxkfcvfw0iu5fgf81zot" \
--d '{"sales": [{"id": "69e034a1-d9ea-4ccb-a4d8-9c1598782650", "quantity": 5, "selling_price": 20}]}'
+-d '[{"id": "69e034a1-d9ea-4ccb-a4d8-9c1598782650", "quantity": 5, "selling_price": 20}]'
 
 
 RETURNS

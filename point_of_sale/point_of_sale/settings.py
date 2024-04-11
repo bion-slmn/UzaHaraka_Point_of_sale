@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'pos_users',
     'inventory',
     'rest_framework',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -79,6 +81,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'point_of_sale.wsgi.application'
 
+INTERNAL_IPS = [
+            # ...
+            "127.0.0.1",
+            # ...
+            ]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -154,7 +161,7 @@ EMAIL_HOST_PASSWORD = ''
 
 CACHES = {
         'default': {
-                    'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-                    'LOCATION': '127.0.0.1:11211',
+                    'BACKEND': "django.core.cache.backends.redis.RedisCache",
+                    'LOCATION': "redis://127.0.0.1:6379",
                     }
         }
