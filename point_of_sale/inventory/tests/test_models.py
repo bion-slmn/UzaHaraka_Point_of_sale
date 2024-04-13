@@ -8,6 +8,7 @@ from django.db import IntegrityError
 import datetime as dt
 from unittest.mock import patch, MagicMock
 from django.utils import timezone
+from django.db.models.query import QuerySet
 
 
 class InventoryModelTest(TestCase):
@@ -124,12 +125,16 @@ class InventoryModelTest(TestCase):
         self.assertEqual(type(self.sell_stock.created_at), dt.datetime)
         self.assertEqual(type(self.sell_stock.updated_at), dt.datetime)
 
-    def test_CategoryModel(self):
+    def test_CategoryModel_fields(self):
         '''
         test the category model
         '''
         self.assertEqual(self.phone.name, 'Phone')
-        # test the unique attribute of name
+        self.assertEqual(self.phone.description, 'All phones')
+        self.assertEqual(self.phone.category_image, None)
+        
+    def test_catergory_meta_field(self):
+        ''' test the unique attribute of name'''
         with self.assertRaises(IntegrityError):
             dPhone = Category.objects.create(
                                              name='Phone',
@@ -137,9 +142,80 @@ class InventoryModelTest(TestCase):
                                              )
         # test the max_length attribute of name
         self.assertEqual(self.phone._meta.get_field('name').max_length, 100)
-        self.assertEqual(self.phone.description, 'All phones')
         self.assertEqual(str(self.phone), 'Phone')
         self.assertEqual(self.phone._meta.verbose_name_plural, 'Categories')
-        self.assertEqual(self.phone.category_image, None)
+        
 
+    def test_catergory_relationship(self):
+        ''' test the one side on the one to many relatioship'''
+        self.assertTrue(hasattr(self.phone, 'product_set'))
+        self.assertEqual(isinstance(self.phone.product_set.all(), QuerySet), True)
+        # test that its related to product class
+        self.assertEqual(self.phone.product_set.model, Product)
+
+    def test_ProductModel_fields(self):
+        '''
+        test the field of product model
+        '''
+        self.assertEqual(self.spark.name, 'spark 3')
+        self.assertEqual(self.spark.quantity, 20)
+        # the latest pruchase the price
+        self.assertNotEqual(self.spark.buying_price, 300)
+        self.assertEqual(self.spark.buying_price, 350)
+        self.assertEqual(self.spark.quantity, 20)
+        self.assertEqual(self.spark.category, self.phone)
+
+    def test_ProductModel_fields_meta(self):
+        '''
+        test the meta data of the fiels in product model
+        '''
+        with self.assertRaises(IntegrityError):
+            dPhone = Product.objects.create(
+                                             name='spark 3',
+                                             quantity=20,
+                                            buying_price=300,
+                                            selling_price=500,
+                                            category=self.phone)
+        self.assertEqual(self.spark._meta.get_field('name').max_length, 100)
+ 
+    def test_Prduct_buying_selling_price(self):
+        '''testing that quantity has to be positive,
+        buying_price & selling_price has to be a number'''
+        with self.assertRaises(IntegrityError):
+            dPhone = Product.objects.create(
+                                             name='sparko 5',
+                                             quantity=-20,
+                                            buying_price=300,
+                                            selling_price=500,
+                                            category=self.phone)
+            dPhone = Product.objects.create(
+                                             name='spark 37',
+                                             quantity=20,
+                                            buying_price='300n',
+                                            selling_price=500,
+                                            category=self.phone)
+            dPhone = Product.objects.create(
+                                             name='spark 3',
+                                             quantity=20,
+                                            buying_price=300,
+                                            selling_price='500l',
+                                            category=self.phone)
+
+    def test_ProductModel_relationship(self):
+        '''
+        test the relationships of product with category
+        '''
+        self.assertEqual(self.spark.category, self.phone)
+        self.assertEqual(self.spark.category.id, self.phone.id)
+        self.assertEqual(self.spark._meta.get_field('category').null, True)
+        # testing on delete
+        spark_id = self.spark.id
+        self.phone.delete()
+        self.assertFalse(Product.objects.filter(id=spark_id).exists())
+
+    def test_Prduct_str(self):
+        '''
+        tes the str method
+        '''
+        self.assertEqual(str(self.spark), 'spark 3')
 
