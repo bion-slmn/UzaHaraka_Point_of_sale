@@ -4,6 +4,7 @@ test the models in the inventory
 from django.test import TestCase
 from inventory.models import Category, Product, Sales, BaseModel, Purchase
 from uuid import UUID
+from django.db import IntegrityError
 import datetime as dt
 from unittest.mock import patch, MagicMock
 from django.utils import timezone
@@ -122,3 +123,23 @@ class InventoryModelTest(TestCase):
         self.assertIsNotNone(self.sell_stock.updated_at)
         self.assertEqual(type(self.sell_stock.created_at), dt.datetime)
         self.assertEqual(type(self.sell_stock.updated_at), dt.datetime)
+
+    def test_CategoryModel(self):
+        '''
+        test the category model
+        '''
+        self.assertEqual(self.phone.name, 'Phone')
+        # test the unique attribute of name
+        with self.assertRaises(IntegrityError):
+            dPhone = Category.objects.create(
+                                             name='Phone',
+                                             description='All phones'
+                                             )
+        # test the max_length attribute of name
+        self.assertEqual(self.phone._meta.get_field('name').max_length, 100)
+        self.assertEqual(self.phone.description, 'All phones')
+        self.assertEqual(str(self.phone), 'Phone')
+        self.assertEqual(self.phone._meta.verbose_name_plural, 'Categories')
+        self.assertEqual(self.phone.category_image, None)
+
+
